@@ -2,20 +2,20 @@
 
 import { useState } from "react"
 import { useParams } from "next/navigation"
-import  clsx  from "clsx"
+import clsx from "clsx"
 import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
 } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { List } from "lucide-react"
 
 
-export function SidebarDashboard({children,}: {children: React.ReactNode}) {
+export function SidebarDashboard({ children, }: { children: React.ReactNode }) {
 
     const pathname = useParams()
     const [isCollapsed, setIsCollapsed] = useState(false)
@@ -33,7 +33,7 @@ export function SidebarDashboard({children,}: {children: React.ReactNode}) {
                         <div className="flex items-center gap-4">
                             <SheetTrigger asChild>
                                 <Button variant="outline" size="icon" className="md:hidden">
-                                    <List className="w-5 h-5"/>
+                                    <List className="w-5 h-5" />
                                 </Button>
                             </SheetTrigger>
 
@@ -43,7 +43,7 @@ export function SidebarDashboard({children,}: {children: React.ReactNode}) {
                 </header>
 
                 <main className="flex-1 py-4 px-2 md:">
-                     {children}
+                    {children}
                 </main>
 
             </div>
