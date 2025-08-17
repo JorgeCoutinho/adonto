@@ -15,8 +15,8 @@ model Appointment {
   phone           String
   appointmentDate DateTime // agendamento
   time            String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   serviceId String
   service   Services @relation(fields: [serviceId], references: [id])
@@ -108,6 +108,8 @@ model User {
   status             Boolean   @default(true)
   timeZone           String?
   stripe_customer_id String?
+  times              String[]@default([])
+
 
   subscription Subscription? // relacionamento onde 1 user pode ter 1 assinatura 
   services     Services[]
