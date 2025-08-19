@@ -162,10 +162,11 @@ export function SidebarDashboard({ children }: { children: React.ReactNode }) {
                 <header
                     className='md:hidden flex items-center justify-between border-b px-2 md:px-6 h-14 z-10 sticky top-0 bg-white'
                 >
+                    {/* menu  */}
                     <Sheet>
                         <div className='flex items-center gap-4'>
                             <SheetTrigger asChild>
-                                <Button variant="outline" size="icon" className='md:hidden'>
+                                <Button onClick={() => setIsCollapsed(!isCollapsed)} variant="outline" size="icon" className='md:hidden'>
                                     <List className='w-5 h-5' />
                                 </Button>
                             </SheetTrigger>
@@ -249,6 +250,7 @@ function SidebarLink({ href, icon, isCollapsed, label, pathname }: SidebarLinkPr
                     "text-gray-700 hover:bg-gray-100": pathname !== href,
                 })}
             >
+                {/*responsavel para icones quando estiver colabsado no PC*/}
                 <span className='w-6 h-6'>{icon}</span>
                 {!isCollapsed && <span>{label}</span>}
             </div>
