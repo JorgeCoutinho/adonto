@@ -41,22 +41,36 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
+import { Prisma } from "@/generated/prisma";
+import { updateProfile } from "../_actions/update-profile"
+ 
+
+type UserWithSubscription = Prisma.UserGetPayload<{
+    include: { subscription: true }
+}>
+
 
 interface ProfileContentProps {
-    user: any
+    user: UserWithSubscription
 }
 
 
 
 export const ProfileContent = ({user}: ProfileContentProps) => {
 
-    const [selecteHours, setSelectHours] = useState<string[]>([])
+    const [selecteHours, setSelectHours] = useState<string[]>(user.times || [])
     const [dialogIsOpen, setDialogIsOpen] = useState(false)
 
 
 
 
-    const form = useProfileForm()
+    const form = useProfileForm({
+        name: user.name,
+        address: user.adress,
+        phone: user.phone,
+        status: user.status,
+        timeZone: user.timeZone,
+    })
 
     function generateTimeSlots(): string[] {
         const hours: string[] = []
@@ -91,12 +105,21 @@ export const ProfileContent = ({user}: ProfileContentProps) => {
     )
 
     async function onSubmit(value: ProfileFormData) {
-        const profileData = {
-            ...value,
-            times: selecteHours
-        }
+        // const profileData = {
+        //     ...value,
+        //     times: selecteHours
+        // }
 
-        console.log(profileData)
+        const response = await updateProfile({
+            name: value.name,
+            address: value.address,
+            phone: value.phone,
+            status: value.status === 'active' ? true : false,
+            timeZone: value.timeZone,
+            times: selecteHours || [],
+        })
+
+        console.log(response)
     }
 
 
@@ -111,9 +134,12 @@ export const ProfileContent = ({user}: ProfileContentProps) => {
                         <div className="flex justify-center">
                             <div className="bg-gray-200 relative h-40 w-40 rounded-full overflow-hidden">
                                 <Image
-                                    src={imgTest}
+                                    src={user.image ? user.image : imgTest}
                                     alt="Foto da clinica "
                                     className="object-cover"
+                                    width="460"
+                                    height="460"
+                                    priority
                                 />
                             </div>
                         </div>
